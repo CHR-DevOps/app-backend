@@ -9,10 +9,10 @@ app.use(express.json());
 
 // Configure MySQL connection
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: process.env.DB_PASSWORD, // Use environment variable for the DB password
-    database: 'mydb'
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "appuser",
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME || "mydb"
 });
 
 // Connect to MySQL
@@ -48,5 +48,5 @@ app.post('/api/data', (req, res) => {
 // Start the server
 const PORT = 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhostS:${PORT}`);
 });
