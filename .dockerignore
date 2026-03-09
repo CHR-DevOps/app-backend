@@ -1,6 +1,12 @@
 node_modules
-npm-debug.log
+npm-debug.log*
+yarn-debug.log*
 .git
 .gitignore
-.env
 Dockerfile
+docker-compose.yml
+README.md
+__tests__
+*.log
+.vscode
+.env
