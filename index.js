@@ -18,9 +18,10 @@ db.connect((err) => {
 
   const app = createApp(db);
   const PORT = process.env.PORT || 5000;
-  app.get("/health", (req, res) => {
-    res.status(200).send("ok");
-  });
+
+  app.get('/health', (req, res) => res.status(200).send('ok'));
+  app.get('/api/health', (req, res) => res.status(200).send('ok'));
+  
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
