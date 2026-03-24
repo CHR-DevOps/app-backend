@@ -1,6 +1,7 @@
 const { test, expect, request } = require('@playwright/test');
 
-const apiUrl = 'http://localhost:5000/api/data';
+const BASE_URL = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:5000';
+const apiUrl = `${BASE_URL}/api/data`;
 
 test('GET /api/data returns list', async () => {
   const context = await request.newContext();
@@ -18,7 +19,7 @@ test('POST /api/data inserts and returns created object', async () => {
 
   // current date
   const now = new Date();
-  const dateString = now.toISOString(); 
+  const dateString = now.toISOString();
   // ex: 2026-03-24T12:45:33.123Z
 
   const userName = `PlaywrightUser_${dateString}`;
