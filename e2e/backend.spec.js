@@ -1,4 +1,5 @@
 const { test, expect, request } = require('@playwright/test');
+const fs = require('fs');
 
 const BASE_URL = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:5000';
 const apiUrl = `${BASE_URL}/data`;
@@ -34,6 +35,11 @@ test('POST /api/data inserts and returns created object', async () => {
 
   expect(body).toHaveProperty('id');
   expect(body).toHaveProperty('name', userName);
+
+  const exportedUserFile = process.env.EXPORTED_USER_FILE;
+  if (exportedUserFile) {
+    fs.writeFileSync(exportedUserFile, `${userName}\n`, 'utf8');
+  }
 
   console.log("Created user:", userName);
 });
