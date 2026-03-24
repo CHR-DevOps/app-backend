@@ -1,7 +1,7 @@
 const { test, expect, request } = require('@playwright/test');
 
 const BASE_URL = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:5000';
-const apiUrl = `${BASE_URL}/api/data`;
+const apiUrl = `${BASE_URL}/data`;
 
 test('GET /api/data returns list', async () => {
   const context = await request.newContext();
