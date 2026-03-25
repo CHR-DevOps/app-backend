@@ -55,6 +55,7 @@ db.connect(async (err) => {
     res.status(200).json({
       status: 'ok',
       service: 'backend',
+      color: process.env.COLOR || 'unknown',
     });
   });
 
