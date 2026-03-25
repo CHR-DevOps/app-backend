@@ -3,7 +3,18 @@ name: Trigger Staging Deploy
 on:
   push:
     branches:
-      - '**'
+      - main
+      - release
+      - 'release/**'
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    branches:
+      - main
+      - release
+      - 'release/**'
 
 jobs:
   trigger:
@@ -12,6 +23,12 @@ jobs:
     steps:
       - name: Trigger infrastructure staging deploy
         run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BRANCH="${{ github.head_ref }}"
+          else
+            BRANCH="${{ github.ref_name }}"
+          fi
+
           curl -L \
             -X POST \
             -H "Accept: application/vnd.github+json" \
@@ -20,7 +37,8 @@ jobs:
             -d '{
               "event_type": "backend-updated",
               "client_payload": {
-                "branch": "${{ github.ref_name }}",
+                "branch": "'"${BRANCH}"'",
+                "event_name": "${{ github.event_name }}",
                 "source_repo": "app-backend"
               }
             }'
