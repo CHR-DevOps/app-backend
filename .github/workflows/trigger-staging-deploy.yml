@@ -1,16 +1,9 @@
 name: Trigger Staging Deploy
 
 on:
-  push:
-    branches:
-      - main
-      - release
-      - 'release/**'
   pull_request:
     types:
-      - opened
-      - synchronize
-      - reopened
+      - closed
     branches:
       - main
       - release
@@ -19,15 +12,12 @@ on:
 jobs:
   trigger:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
 
     steps:
       - name: Trigger infrastructure staging deploy
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            BRANCH="${{ github.head_ref }}"
-          else
-            BRANCH="${{ github.ref_name }}"
-          fi
+          BRANCH="${{ github.base_ref }}"
 
           curl -L \
             -X POST \
